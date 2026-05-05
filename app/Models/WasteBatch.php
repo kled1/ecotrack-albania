@@ -8,12 +8,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Spatie\Activitylog\Support\LogOptions;
-use Spatie\Activitylog\Models\Concerns\LogsActivity;
-
 class WasteBatch extends Model
 {
-    use HasFactory, LogsActivity;
+    use HasFactory;
 
     protected $fillable = [
         'batch_code',
@@ -32,11 +29,6 @@ class WasteBatch extends Model
             'quantity_kg' => 'decimal:2',
             'origin_date' => 'date',
         ];
-    }
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logAll()->logOnlyDirty()->dontLogEmptyChanges();
     }
 
     public function collaboration(): BelongsTo

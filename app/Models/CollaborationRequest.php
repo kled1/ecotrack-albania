@@ -8,12 +8,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Spatie\Activitylog\Support\LogOptions;
-use Spatie\Activitylog\Models\Concerns\LogsActivity;
-
 class CollaborationRequest extends Model
 {
-    use HasFactory, LogsActivity;
+    use HasFactory;
 
     protected $fillable = [
         'producer_id',
@@ -36,11 +33,6 @@ class CollaborationRequest extends Model
             'accepted_at' => 'datetime',
             'completed_at' => 'datetime',
         ];
-    }
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logAll()->logOnlyDirty()->dontLogEmptyChanges();
     }
 
     public function producer(): BelongsTo

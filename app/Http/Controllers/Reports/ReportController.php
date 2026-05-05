@@ -44,12 +44,6 @@ class ReportController extends Controller
     {
         $report = $request->user()->reports()->create($request->validated());
 
-        activity()
-            ->performedOn($report)
-            ->causedBy($request->user())
-            ->withProperties($request->validated())
-            ->log('Report created');
-
         return redirect()->route('reports.index')
             ->with('success', 'Report saved as draft.');
     }
@@ -91,11 +85,6 @@ class ReportController extends Controller
             'submitted_at' => now(),
         ]);
 
-        activity()
-            ->performedOn($report)
-            ->causedBy($request->user())
-            ->log('Report submitted for verification');
-
         return redirect()->route('reports.index')
             ->with('success', 'Report submitted for verification.');
     }
@@ -111,11 +100,6 @@ class ReportController extends Controller
             'verified_at' => now(),
             'verified_by' => $request->user()->id,
         ]);
-
-        activity()
-            ->performedOn($report)
-            ->causedBy($request->user())
-            ->log('Report verified');
 
         return back()->with('success', 'Report verified successfully.');
     }

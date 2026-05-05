@@ -9,14 +9,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Spatie\Activitylog\Support\LogOptions;
-use Spatie\Activitylog\Models\Concerns\LogsActivity;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable, HasApiTokens, HasRoles, LogsActivity;
+    use HasFactory, Notifiable, HasApiTokens, HasRoles;
 
     protected $fillable = [
         'name',
@@ -44,14 +42,6 @@ class User extends Authenticatable
             'is_active' => 'boolean',
             'sector' => UserSector::class,
         ];
-    }
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()
-            ->logOnly(['name', 'email', 'company_name', 'nipt', 'sector', 'is_active'])
-            ->logOnlyDirty()
-            ->dontLogEmptyChanges();
     }
 
     public function reports(): HasMany
